@@ -1,9 +1,11 @@
-def powerset(arr):
-    que=[[]]
-    for i in arr:
-        ee=len(que)
-        for j in range(ee):
-            y=que[j]
-            que.append(y+[i])
-    print(que)
-powerset([2,3,5])
+def all_per(l):
+    # y=set()
+    q=[[]]
+    for i in l:
+        x=len(q)
+        for v in range(x):
+            # t=q[v]
+            # t.insert()
+            q.append(q[v]+[i])
+    
+all_per([1,2,3,345,2,54,234,234,12,312,3,123,12,312,3,123,12,3434,235,25,234,54,54,523,53,245,234,523,452,345,23,5423,523,5,23,523,5,23,523,523,523])
