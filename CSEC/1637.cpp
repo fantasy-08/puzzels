@@ -1,7 +1,7 @@
 
-// Problem : Movie Festival II
+// Problem : Removing Digits
 // Contest : CSES - CSES Problem Set
-// URL : https://cses.fi/problemset/task/1632
+// URL : https://cses.fi/problemset/task/1637
 // Memory Limit : 512 MB
 // Time Limit : 1000 ms
 // Powered by CP Editor (https://github.com/cpeditor/cpeditor)
@@ -31,34 +31,34 @@
 #define se second
 #define MOD 1000000007
 using namespace std;
+int dp[1000001];
+
+
+int go(int s){
+	if(s==0)return 0;
+	if(dp[s]!=-1)return dp[s];
+	int ans=INT_MAX;
+	vector<bool>dig(10,false);
+	int k=s;
+	while(k){
+		int l=k%10;
+		dig[l]=true;
+		k/=10;
+	}
+	rep(i,1,10){
+		if(dig[i]==true && s-i>=0){
+			ans=min(ans,1+go(s-i));
+		}
+	}
+	return dp[s]=ans;
+}
+
 
 void solve(){
-	int n,k;
-	cin>>n>>k;
-	vlli K(k,0);
-	vector<pair<int,int>>v;
-	FOR(i,n){
-		int a,b;
-		cin>>a>>b;
-		v.pb({a,b});
-	}	
-	sort(all(v),[](pair<int,int>X,pair<int,int>Y){
-		if(X.se!=Y.se)
-		return X.se<Y.se;
-		return X.ft>Y.ft;
-	});
-	int count=0;
-	for(auto p:v){
-		int S=p.ft;
-		FOR(i,k){
-			if(K[i]<=S){
-				count++;
-				K[i]=p.se;
-				break;
-			}
-		}	
-	}
-	cout<<count;
+	memset(dp,-1,sizeof(dp));
+	int n;
+	cin>>n;
+	cout<<go(n);
 	return;	
 }
 

@@ -1,7 +1,7 @@
 
-// Problem : Movie Festival II
+// Problem : Grid Paths
 // Contest : CSES - CSES Problem Set
-// URL : https://cses.fi/problemset/task/1632
+// URL : https://cses.fi/problemset/task/1638
 // Memory Limit : 512 MB
 // Time Limit : 1000 ms
 // Powered by CP Editor (https://github.com/cpeditor/cpeditor)
@@ -33,32 +33,50 @@
 using namespace std;
 
 void solve(){
-	int n,k;
-	cin>>n>>k;
-	vlli K(k,0);
-	vector<pair<int,int>>v;
+	int n;
+	cin>>n;
+	int arr[n][n];
 	FOR(i,n){
-		int a,b;
-		cin>>a>>b;
-		v.pb({a,b});
+		FOR(j,n){
+			char t;
+			cin>>t;
+			if(t=='*')arr[i][j]=0;
+			else arr[i][j]=1;
+			// cout<<arr[i][j]<<" ";
+		}
+		// cout<<endl;
 	}	
-	sort(all(v),[](pair<int,int>X,pair<int,int>Y){
-		if(X.se!=Y.se)
-		return X.se<Y.se;
-		return X.ft>Y.ft;
-	});
-	int count=0;
-	for(auto p:v){
-		int S=p.ft;
-		FOR(i,k){
-			if(K[i]<=S){
-				count++;
-				K[i]=p.se;
-				break;
-			}
-		}	
+	if(arr[0][0]==0 || arr[n-1][n-1]==0){
+		cout<<0;
+		return;
 	}
-	cout<<count;
+	int dp[n][n];
+	memset(dp,0,sizeof(dp));
+	dp[0][0]=1;
+	for(int i=1;i<n;i++){
+		if(arr[0][i]==0)continue;
+		else dp[0][i]=dp[0][i-1];
+	}
+	for(int i=1;i<n;i++){
+		if(arr[i][0]==0)continue;
+		else dp[i][0]=dp[i-1][0];
+	}
+	rep(i,1,n){
+		rep(j,1,n){
+			if(arr[i][j]==0){
+				dp[i][j]=0;
+				continue;
+			}
+			else dp[i][j]=(dp[i-1][j]%MOD+dp[i][j-1]%MOD)%MOD;
+		}
+	}
+	// FOR(i,n){
+		// FOR(j,n){
+			// cout<<dp[i][j]<<" ";
+		// }
+		// cout<<endl;
+	// }
+	cout<<dp[n-1][n-1];
 	return;	
 }
 

@@ -1,7 +1,7 @@
 
-// Problem : Movie Festival II
+// Problem : Dice Combinations
 // Contest : CSES - CSES Problem Set
-// URL : https://cses.fi/problemset/task/1632
+// URL : https://cses.fi/problemset/task/1633
 // Memory Limit : 512 MB
 // Time Limit : 1000 ms
 // Powered by CP Editor (https://github.com/cpeditor/cpeditor)
@@ -31,34 +31,24 @@
 #define se second
 #define MOD 1000000007
 using namespace std;
+int n;
+int dp[1000001];
+int go(int s){
+	if(s==n)return 1;
+	if(dp[s]!=-1)return dp[s];
+	int ans=0;
+	
+	rep(i,1,7){
+		if(s+i<=n)
+		ans=(ans%MOD+go(s+i)%MOD)%MOD;
+	}
+	return dp[s]=ans%MOD;
+}
 
 void solve(){
-	int n,k;
-	cin>>n>>k;
-	vlli K(k,0);
-	vector<pair<int,int>>v;
-	FOR(i,n){
-		int a,b;
-		cin>>a>>b;
-		v.pb({a,b});
-	}	
-	sort(all(v),[](pair<int,int>X,pair<int,int>Y){
-		if(X.se!=Y.se)
-		return X.se<Y.se;
-		return X.ft>Y.ft;
-	});
-	int count=0;
-	for(auto p:v){
-		int S=p.ft;
-		FOR(i,k){
-			if(K[i]<=S){
-				count++;
-				K[i]=p.se;
-				break;
-			}
-		}	
-	}
-	cout<<count;
+	memset(dp,-1,sizeof(dp));
+	cin>>n;
+	cout<<go(0)%MOD;
 	return;	
 }
 

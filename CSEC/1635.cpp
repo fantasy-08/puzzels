@@ -1,7 +1,7 @@
 
-// Problem : Movie Festival II
+// Problem : Coin Combinations I
 // Contest : CSES - CSES Problem Set
-// URL : https://cses.fi/problemset/task/1632
+// URL : https://cses.fi/problemset/task/1635
 // Memory Limit : 512 MB
 // Time Limit : 1000 ms
 // Powered by CP Editor (https://github.com/cpeditor/cpeditor)
@@ -33,32 +33,22 @@
 using namespace std;
 
 void solve(){
-	int n,k;
-	cin>>n>>k;
-	vlli K(k,0);
-	vector<pair<int,int>>v;
-	FOR(i,n){
-		int a,b;
-		cin>>a>>b;
-		v.pb({a,b});
-	}	
-	sort(all(v),[](pair<int,int>X,pair<int,int>Y){
-		if(X.se!=Y.se)
-		return X.se<Y.se;
-		return X.ft>Y.ft;
-	});
-	int count=0;
-	for(auto p:v){
-		int S=p.ft;
-		FOR(i,k){
-			if(K[i]<=S){
-				count++;
-				K[i]=p.se;
-				break;
-			}
-		}	
-	}
-	cout<<count;
+	 int mod = 1e9+7;
+	  int n, target;
+	  cin >> n >> target;
+	  vector<int> c(n);
+	  for (int&v : c) cin >> v;
+	
+	  vector<int> dp(target+1,0);
+	  dp[0] = 1;
+	  for (int i = 1; i <= target; i++) {
+	    for (int j = 0; j < n; j++) {
+	      if (i-c[j] >= 0) {
+		(dp[i] += dp[i-c[j]]) %= mod;
+	      }
+	    }
+	  }
+	  cout << dp[target] << endl;
 	return;	
 }
 
