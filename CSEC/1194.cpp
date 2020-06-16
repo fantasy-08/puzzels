@@ -33,7 +33,25 @@
 using namespace std;
 int n,m;
 int arr[1001][1001];
+int wall[1001][1001];
+vector<pair<int,int>>mon;
 string ans="";
+void shift(char dir)
+{
+	for(int i=0;i<mon.size();i++){
+		int x=mon[i].ft,y=mon[i].se;
+		arr[x][y]=1;
+		int X,Y;
+		if(dir=='D')X=x+1,Y=y;
+		else if(dir=='U')X=x-1,Y=y;
+		else if(dir=='L')X=x,Y=y-1;
+		else X=x,Y=y+1;
+		if(!(X<0 || X>=n || Y<0 || Y>=m) && (wall[X][Y] || arr[X][Y]==0))continue;
+		mon[i].ft=X,mon[i].se=Y;
+		if(X<0 || X>=n || Y<0 || Y>=m)continue;
+		else arr[X][Y]=0;
+	}
+}
 void go(int i,int j,string s){
 	if(i<0 || j<0 || i>=n || j>=m)return ;
 	if(arr[i][j]==0)return ;
@@ -41,11 +59,20 @@ void go(int i,int j,string s){
 		ans=s;
 		return ;
 	}
+	// cerr<<i<<" "<<j<<endl;
 	arr[i][j]=0;
+	shift('D');
 	go(i+1,j,s+'D');
+	shift('U');
+	shift('U');
 	go(i-1,j,s+'U');
+	shift('D');
+	shift('L');
 	go(i,j-1,s+'L');
+	shift('R');
+	shift('R');
 	go(i,j+1,s+'R');
+	shift('L');
 }
 void solve(){
 	cin>>n>>m;
@@ -60,6 +87,8 @@ void solve(){
 				si=i;
 				sj=j;
 			}
+			if(c=='M')mon.pb({i,j});
+			if(c=='#')wall[i][j]=1;
 		}
 	}
 	go(si,sj,"");
