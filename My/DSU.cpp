@@ -1,4 +1,4 @@
-void initialize( int Arr[ ],int size[] int N)
+void initialize( int Arr[ ],int size[], int N)
 {
     for(int i = 0;i<N;i++)
 	{
@@ -6,11 +6,19 @@ void initialize( int Arr[ ],int size[] int N)
 		size[ i ] = 1;
 	}
 }
-
-void weighted-union(int Arr[ ],int size[ ],int A,int B)
+int root (int Arr[ ] ,int i)
 {
-    int root_A = root(A);
-    int root_B = root(B);
+    while(Arr[ i ] != i)
+    {
+	    Arr[ i ] = Arr[ Arr[ i ] ] ; 
+		i = Arr[ i ]; 
+	}
+	return i;
+}
+void union1(int Arr[ ],int size[ ],int A,int B)
+{
+    int root_A = root(Arr,A);
+    int root_B = root(Arr,B);
     if(size[root_A] < size[root_B ])
     {
 		Arr[ root_A ] = Arr[root_B];
@@ -22,14 +30,4 @@ void weighted-union(int Arr[ ],int size[ ],int A,int B)
 		size[root_A] += size[root_B];
 	}
 
-}
-
-int root (int Arr[ ] ,int i)
-{
-    while(Arr[ i ] != i)
-    {
-	    Arr[ i ] = Arr[ Arr[ i ] ] ; 
-		i = Arr[ i ]; 
-	}
-	return i;
 }
