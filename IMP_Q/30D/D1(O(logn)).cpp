@@ -1,6 +1,7 @@
 class Solution {
 public:
     int arrangeCoins(int n) {
+        return floor(-0.5+sqrt((double)2*n+0.5));
         int ans=0;
         long long int l=0,h=n;
         
