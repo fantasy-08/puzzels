@@ -1,0 +1,25 @@
+int* topoSort(int V, vector<int> adj[]) {
+    int in[V];
+    for(int i=0;i<V;i++){
+        for(auto child:adj[i]){
+            in[child]++;
+        }
+    }
+    int *arr=  (int*)malloc(sizeof(int)*V);
+    // int *arr = new int[V];
+    queue<int>q;
+    int E=0;
+    for(int i=0;i<V;i++){
+        if(in[i]==0) q.push(i);
+    }
+    while(q.size()){
+        int node=q.front();
+        arr[E++]=node;
+        q.pop();
+        for(auto child:adj[node]){
+            in[child]--;
+            if(in[child]==0)q.push(child);
+        }
+    }
+    return arr;
+}
