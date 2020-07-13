@@ -1,3 +1,4 @@
+#include<bits/stdc++.h>
 vector<bool>vis,s;
 vector<vector<int>>adj;
 bool dfs(int node)
