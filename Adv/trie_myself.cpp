@@ -71,3 +71,77 @@ int main() {
         }
  return 0;
 }
+
+
+
+// //#pragma GCC optimize "trapv"//  WA to RE int!!
+// #include <bits/stdc++.h>
+// #define MOD 1000000007
+// using namespace std;
+
+// struct Trie
+// {
+//     struct Trie* children[26];
+//     bool isWord;
+//     Trie()
+//     {
+//         isWord=false;
+//         for(int i=0;i<26;i++)
+//             children[i]=nullptr;
+//     }
+// };
+// void insert(Trie* root,string word)
+// {
+//     for(int i=0;i<word.size();i++)
+//     {
+//         if(root->children[word[i]-'a'])
+//         {
+//             root=root->children[word[i]-'a'];
+//         }
+//         else
+//         {
+//             root->children[word[i]-'a']=new Trie();
+//             root=root->children[word[i]-'a'];
+//         }
+//     }
+//     root->isWord=true;
+// }
+// bool search(Trie* root,string word)
+// {
+//     for(int i=0;i<word.size();i++)
+//     {
+//         if(root->children[word[i]-'a'])
+//         {
+//             root=root->children[word[i]-'a'];
+//         }
+//         else return false;
+//     }
+//     return root->isWord;
+// }
+// int32_t main() {
+//     int n;
+//     cin>>n;
+//     while(n--)
+//     {
+//         int size;
+//         cin>>size;
+//         Trie* Google=new Trie;
+//         while(size--)
+//         {
+//             string word;
+//             cin>>word;
+//             insert(Google,word);
+//         }
+//         string query;
+//         cin>>query;
+//         if(search(Google,query))
+//         {
+//             cout<<1<<endl;
+//         }
+//         else
+//         {
+//             cout<<0<<endl;
+//         }
+//     }
+//     return 0;
+// }
