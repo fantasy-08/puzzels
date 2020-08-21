@@ -1,8 +1,8 @@
 
-// Problem : E - Logs
-// Contest : AtCoder - AtCoder Beginner Contest 174
-// URL : https://atcoder.jp/contests/abc174/tasks/abc174_e
-// Memory Limit : 1024 MB
+// Problem : C. Block Towers
+// Contest : Codeforces - 8VC Venture Cup 2016 - Elimination Round
+// URL : https://codeforces.com/problemset/problem/626/C
+// Memory Limit : 256 MB
 // Time Limit : 2000 ms
 // Powered by CP Editor (https://github.com/cpeditor/cpeditor)
 
@@ -34,53 +34,37 @@
 #define ft first
 #define se second
 #define MOD 1000000007
-#define BLK 1200
 using namespace std;
 template<typename... T> void rd(T&... args) { ((cin >> args), ...); }
 template<typename... T> void pp(T... args) { ((cout << args << " "), ...); cout<<"\n"; }
-map<int,int>freq;
-void add(int x){
-	freq[x]++;
-}
-void remove(int x){
-	freq[x]--;
-	if(freq[x]==0){
-		freq.erase(x);
-	}
-}
-bool cmp(vector<int> A,vector<int> B){
-	int X=A[0]/BLK,Y=B[0]/BLK;
-	if(X!=Y)return X<Y;
-	return X%2?A[1]<B[1]:A[1]>B[1];
-	
-}
 
 void solve(){
-	int n,q;
-	rd(n,q);
-	vector<int>arr(n+1);
-	rep(i,1,n+1)rd(arr[i]);
-	vector<vector<int>>Q;
-	FOR(i,q){
-		int l,r;
-		cin>>l>>r;
-		Q.pb({l,r,i});
+	int a,b;
+	rd(a,b);
+	if(a==0 || b==0){
+		pp(max(a*2,b*3));
+		return ;
 	}
-	sort(all(Q),cmp);
-	int ML=1,MR=0;
-	vector<int>ans(q);
-	FOR(i,q){
-		int L=Q[i][0];
-		int R=Q[i][1];
-		int index=Q[i][2];
-		while(ML>L)	ML--,add(arr[ML]);
-		while(MR<R) MR++,add(arr[MR]);
-		while(MR>R) remove(arr[MR]),MR--;
-		while(ML<L) remove(arr[ML]),ML++;
-		ans[index]=freq.size();
+	// int l=0,h=INT_MAX;
+	// int ans=INT_MAX;
+	// while(l<=h){
+		// int i=l+(h-l)/2;
+		// if((a<=(i/2))&&(b<=(i/3)) && ((a+b)<=(i/2+i/3-i/6))){
+			// ans=a;
+			// h=a-1;
+		// }
+		// else l=a+1;
+	// }
+	// pp(ans);
+	// return ;
+	for(int i=1;;i++){
+		if((a<=(i/2))&&(b<=(i/3)) && ((a+b)<=(i/2+i/3-i/6))){
+			pp(i);
+			return ;
+		}
 	}
-	for(int v:ans) pp(v);
-	return;	
+	pp(max(a*2,b*3));
+		return ;
 }
 
 
