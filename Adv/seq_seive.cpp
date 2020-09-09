@@ -24,28 +24,30 @@
 #define MOD 1000000007
 #define MAXN 100001
 using namespace std;
-vector<int>prime;
-void seive(){
-    vector<char>s(MAXN,true);
-    rep(i,2,sqrt(MAXN)+1){
-        if(s[i]==true){
-            prime.pb(i);
-            for(int j=i*i;j<MAXN;j+=i){
-                s[i]=false;
-            }
-        }
-    }
+vector<bool> segmentedSieveNoPreGen(long long L, long long R) {
+    vector<bool> isPrime(R - L + 1, true);
+    long long lim = sqrt(R);
+    for (long long i = 2; i <= lim; ++i)
+        for (long long j = max(i * i, (L + i - 1) / i * i); j <= R; j += i)
+            isPrime[j - L] = false;
+    if (L == 1)
+        isPrime[0] = false;
+    return isPrime;
 }
-
-void printPrime(int l,int r){
-
-}
-
 void solve(){
     int l,r;
     cin>>l>>r;
-    printPrime(l,r);
-    return;	
+    vector<bool>val=segmentedSieveNoPreGen(l,r);
+    int ans=0;
+    if(val.size()<2){
+        cout<<0<<endl;
+        return ;
+    }
+    for(int i=0;i<(val.size())-2;i++){
+        if(val[i] && val[i+2])ans++;
+    }
+    cout<<ans;
+    return;    
 }
 
 
