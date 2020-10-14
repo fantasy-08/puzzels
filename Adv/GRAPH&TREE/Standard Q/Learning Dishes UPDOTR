@@ -1,0 +1,130 @@
+#include <bits/stdc++.h>
+#include <string.h> 
+using namespace std;
+
+const int  N = 1e6+5;
+const int  LOGN = 25;
+
+
+
+vector<int > G[N];
+int  P[N][LOGN];
+int  A[N];
+int  lvl[N];
+int  MX[N],Cnt[N];
+
+
+void dfs(int u,int par)
+{
+    if(par != -1 ) 
+    {
+        if(A[u]>MX[par])
+        {  
+            MX[u]=A[u];
+            Cnt[u]=Cnt[par]+1;
+        }
+        else 
+        {
+            MX[u]=MX[par];
+            Cnt[u]=Cnt[par];
+        }
+        lvl[u]=1+lvl[par];
+    }
+    else lvl[u]=0;
+    P[u][0]=par;
+    for(int v:G[u])
+    {
+		if (v == par) continue;
+		dfs(v, u);
+    }
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    int  t;
+    cin>>t;
+    while(t--)
+    {
+        
+        
+        int  n;
+        cin>>n;
+        
+        for(int  i=0;i<n;i++) cin>>A[i];
+        
+        for(int  i=1;i<n;i++)
+        {
+            int  p;
+            cin>>p;
+            G[i].push_back(p-1);
+            G[p-1].push_back(i);
+        }
+        
+        for(int  i=0;i<n;i++){
+            for(int  j=0;j<LOGN;j++)
+                P[i][j]=-1;
+            lvl[i]=0;
+        }
+        MX[0]=A[0];
+        Cnt[0]=1;
+        
+        dfs(0, -1);
+        for(int  i=0;i<n;i++)
+        G[i].clear();
+        
+        for(int i=1;i<LOGN;i++)
+        {
+            for(int  j=0;j<n;j++)
+            {
+                if(P[j][i-1]!=-1)
+                P[j][i]=P[P[j][i-1]][i-1];
+            }
+        }
+        
+        int  Q;
+        cin>>Q;
+        int  prev = 0;
+        while(Q--)
+        {
+            
+            int  a,b;
+            cin>>a>>b;
+            
+            a =a^prev;
+            b = b^prev;
+            a--;
+            
+            int  tmp =a;
+            if(MX[a]<=b)
+            {
+                prev =0;
+            }
+            else if(MX[0]>b)
+            {
+                prev = Cnt[a];
+            }
+            else
+            {
+                for(int i = LOGN-1;i>=0;i--)
+                {
+                    if(P[tmp][i]!=-1)
+                    {
+                        if(MX[P[tmp][i]]>b)
+                            tmp = P[tmp][i];
+                    }
+                }
+                int tmp1 = P[tmp][0];
+                prev =Cnt[a]-Cnt[tmp1];
+            }
+            cout<<prev<<endl;
+            
+            
+            
+        }
+        
+        
+    }
+}
+
