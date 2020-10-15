@@ -1,3 +1,11 @@
+
+// Problem : Beauty of tree
+// Contest : Google Coding Competitions - Round D 2020 - Kick Start 2020
+// URL : https://codingcompetitions.withgoogle.com/kickstart/round/000000000019ff08/0000000000386edd
+// Memory Limit : 1024 MB
+// Time Limit : 20000 ms
+// Powered by CP Editor (https://github.com/cpeditor/cpeditor)
+
 // God & me
 // Fly ...
 //#pragma GCC optimize "trapv"//  WA to RE int!!
@@ -31,15 +39,61 @@ using namespace std;
 template<typename... T> void rd(T&... args) { ((cin >> args), ...); }
 template<typename... T> void pp(T... args) { ((cout << args << " "), ...); cout<<"\n"; }
 
-void solve(){
+int dp[5000005][2];
 
-	return;	
+void go(int node,int par,vector<int>&arr,int &dis,bool F,vector<int>adj[])
+{
+	dp[node][F]=1;
+	arr.pb(node);
+	for(auto child:adj[node]){
+		if(child!=par){
+			go(child,node,arr,dis,F,adj);
+		}
+	}
+	arr.pop_back();
+	int N=arr.size();
+	if(N>=dis){
+		dp[arr[N-dis]][F]+=dp[node][F];
+	}
+}
+
+double solve(){
+	int n,a,b;
+	rd(n,a,b);
+	vector<int>adj[n+1];
+	
+	for(int i=2;i<=n;i++)
+	{
+		int t;
+		rd(t);
+		adj[i].pb(t);
+		adj[t].pb(i);
+	}
+	
+	vector<int>arr;
+	go(1,-1,arr,a,0,adj);
+	go(1,-1,arr,b,1,adj);
+	
+	double ans=0;
+	for(int i=1;i<=n;i++)
+	{
+		ans+=(n*(dp[i][0]+dp[i][1])-(dp[i][0]*dp[i][1]));
+	}
+	ans/=(n*n);
+	
+	return ans;
 }
 
 
 int32_t main() {
-    fint{
-    	solve();
+   fast;
+	precision(10);
+    int t;
+    cin>>t;
+    for(int i=1;i<=t;i++)
+    {
+    	cout<<"Case #"<<i<<" :"<<solve()<<endl;
     }
+    
     return 0;
 }
