@@ -1,0 +1,37 @@
+class Solution {
+public:
+    map<pair<TreeNode*,pair<bool,bool>>,int>dp;
+    int go(TreeNode* root,bool visited,bool compulsory)
+    {
+        if(!root)return 0;
+        if(!root->left && !root->right)
+        {
+            if(visited)return 0;
+            return 1;
+        }
+        if(dp.find({root,{visited,compulsory}})!=dp.end())return dp[{root,{visited,compulsory}}];
+        if(visited)
+        {
+            int ans=go(root->left,false,false)+go(root->right,false,false);
+            int temp=1+go(root->left,true,compulsory)+go(root->right,true,compulsory);
+            return dp[{root,{visited,compulsory}}]=min(temp,ans);
+        }
+        if(compulsory)
+        {
+            return dp[{root,{visited,compulsory}}]=1+go(root->left,true,compulsory)+go(root->right,true,compulsory);
+        }
+        int ans=1+go(root->left,true,compulsory)+go(root->right,true,compulsory);
+        int temp;
+        if(root->left && root->right)
+            temp=min(go(root->left,false,true)+go(root->right,false,false),go(root->left,false,false)+go(root->right,false,true));
+        else if(root->left)
+            temp=go(root->left,false,true);
+        else 
+            temp=go(root->right,false,true);
+        return dp[{root,{visited,compulsory}}]=min(ans,temp);
+    }
+    int minCameraCover(TreeNode* root) {
+        dp.clear();
+        return go(root,false,false);
+    }
+};
