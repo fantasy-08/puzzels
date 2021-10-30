@@ -91,3 +91,61 @@ int main()
   
     return 0; 
 }
+
+
+/*
+Adj list solution
+asked in airtel | Microsoft
+
+bool bpm(map<int,set<int>>&adj, int u,vector<bool>&seen, vector<int>&matchR,int m,int n)
+{
+    for (int v = 0; v < n; v++)
+    {
+        if (adj[u].find(v)!=adj[u].end() && !seen[v])
+        {
+            seen[v] = true;
+            if (matchR[v] < 0 || bpm(adj, matchR[v],seen, matchR,m,n))
+            {
+                matchR[v] = u;
+                return true;
+            }
+        }
+    }
+    return false;
+}
+// n = slots
+int maxBP(map<int,set<int>>&adj,int m,int n){
+    vector<int>matchR(n,-1);
+    int result = 0;
+    for (int u = 0; u < m; u++)
+    {
+        vector<bool>seen(n,false);
+        if (bpm(adj, n+u, seen, matchR,m,n))
+            result++;
+    }
+    return result;
+}
+
+bool go(vector<int>a,vector<int>b,int s){
+    int n=a.size();
+    map<int,set<int>>adj;
+    // per. starts from n to 2*n - 1
+    // slot 0 -> s-1
+    for(int i=0;i<n;i++){
+        adj[s+i].insert(a[i]-1),adj[s+i].insert(b[i]-1);
+    }
+    
+    int max_ = maxBP(adj,n,s);
+    return max_ == n;
+}
+
+
+int main()
+{
+    cout << go({1,1,3},{2,2,1},3)<<endl;
+    cout << go({3,2,3,1},{1,3,1,2},3)<<endl;
+    cout << go({2,5,6,5},{5,4,2,2},8)<<endl;
+    return 0;
+}
+
+*/
