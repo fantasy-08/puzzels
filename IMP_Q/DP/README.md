@@ -9,6 +9,8 @@
 * Instead of calling function again (recusion) use the address of the `dp` array.
 * Return the `dp` array value with dimensions value that are passed to recusive function call (at the beginning / first call).
 
+#### Bottom-Up approach
+
 ```cpp
 class Solution {
 public:
@@ -29,7 +31,8 @@ public:
 };
 ```
 
-#### changes
+#### Top-Down approach
+
 ```cpp
 class Solution {
 public:
