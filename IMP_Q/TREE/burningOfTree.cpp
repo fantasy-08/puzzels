@@ -62,12 +62,13 @@ class Solution {
             ans.push_back(tempA);
         }
         
-        // for(auto a:ans) {
-        //     for(int v:a){
-        //         cout<<v<<" ";
-        //     }
-        //     cout<<endl;
-        // }
+        // printing order of node burned...
+        for(auto a:ans) {
+            for(int v:a){
+                cout<<v<<" ";
+            }
+            cout<<endl;
+        }
         
         return ans.size() == 0 ? 0 : ans.size() - 1;
     }
